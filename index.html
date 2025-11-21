@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EJ APPAREL — Final</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap">
+  <style>
+    :root{
+      --brand:#a83232;
+      --muted:#666;
+      --danger:#e74c3c;
+      --warning:#f39c12;
+      --ok:#27ae60
+    }
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:#fff;
+      color:#222
+    }
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:12px 16px;
+      background:var(--brand);
+      color:#fff;
+      position:relative
+    }
+    header h1{
+      margin:0;
+      font-size:18px
+    }
+    .menu{
+      font-size:22px;
+      cursor:pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 24px;
+      height: 24px;
+    }
+    .menu::before,
+    .menu::after,
+    .menu span {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 2px;
+      background-color: #fff;
+      margin: 2px 0;
+      transition: 0.3s;
+      color: black
+    }
+    .menu span {
+      background-color: #fff;
+    }
+    .icons{
+      display:flex;
+      gap:12px;
+      align-items:center
+    }
+    .cart{
+      position:relative;
+      font-size:20px;
+      cursor:pointer
+    }
+    .cart-count{
+      position:absolute;
+      top:-7px;
+      right:-10px;
+      background:yellow;
+      color:#111;
+      border-radius:999px;
+      padding:2px 6px;
+      font-size:12px
+    }
+    .dropdown{
+      display:none;
+      position:absolute;
+      left:8px;
+      top:56px;
+      background:#af0404;
+      color:#fcf7f7;
+      box-shadow:0 8px 24px rgba(0,0,0,.12);
+      border-radius: 3px;
+      min-width:220px;
+      z-index:1200;
+      border-radius: 5px;
+    }
+    .dropdown button{
+      display:block;
+      width:100%;
+      padding:10px 12px;
+      border-radius: 3px;
+      background-color: rgb(250, 249, 249);
+      text-align:left;
+      cursor:pointer;
+      color:#be0505;
+      font-size:14px;
+      font-weight: bold;
+    }
+    .dropdown button:hover{
+      background:#d48e8e;
+    }
+    .banner{
+      background:#ead8bb;
+      padding:18px
+    }
+    .banner-content{
+      max-width:980px;
+      margin:0 auto;
+      display:flex;
+      gap:20px;
+      align-items:center;
+      justify-content:center
+    }
+    .banner-image img{
+      max-width:260px;
+      border-radius:14px
+    }
+    .products{
+      padding:18px;
+      background: #a83232; 
+      color: white; 
+      border-radius: 5px;
+    }
+    .product-list{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      justify-content:center
+    }
+    .product{
+      width:180px;
+      border:1px solid #eee;
+      border-radius:10px;
+      padding:12px;
+      text-align:center;
+      background:#fff
+    }
+    .product img{
+      width:100%;
+      height:120px;
+      object-fit:cover;
+      border-radius:8px
+    }
+    .bottom-menu{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      background:#fff;
+      border-top:1px solid #eee;
+      display:flex;
+      justify-content:space-around;
+      padding:8px 0;
+      z-index:900
+    }
+    .page{
+      display:none;
+      padding:20px
+    }
+    .page.active{
+      display:block;
+      padding-bottom:80px
+    }
+    .overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.45);
+      justify-content:center;
+      align-items:center;
+      z-index:1500
+    }
+    .box{
+      background:#fff;
+      width:360px;
+      border-radius:10px;
+      padding:18px;
+      position:relative;
+      box-shadow:0 12px 36px rgba(0,0,0,.18)
+    }
+    .closeBtn{
+      position:absolute;
+      right:12px;
+      top:10px;
+      border:0;
+      background:none;
+      font-size:18px;
+      cursor:pointer;
+      color:#333
+    }
+    input, select{
+      width:100%;
+      padding:10px;
+      border:1px solid #ddd;
+      border-radius:8px;
+      margin:8px 0;
+      box-sizing:border-box
+    }
+    .btnPrimary{
+      background:var(--brand);
+      color:#fff;
+      border:0;
+      padding:10px 14px;
+      border-radius:8px;
+      cursor:pointer
+    }
+    .pwWrap{
+      position:relative
+    }
+    .pwToggle{
+      position:absolute;
+      right:12px;
+      top:50%;
+      transform:translateY(-50%);
+      background:none;
+      border:0;
+      cursor:pointer;
+      font-size:16px
+    }
+    .strengthBar{
+      height:8px;
+      border-radius:999px;
+      background:#eee;
+      overflow:hidden;
+      margin-top:6px
+    }
+    .strengthFill{
+      height:100%;
+      width:0%;
+      background:var(--danger);
+      transition:width .25s,background .25s
+    }
+    .strengthText{
+      font-size:13px;
+      color:var(--muted);
+      margin-top:6px
+    }
+    .cart-item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin:8px 0;
+      padding-bottom:8px;
+      border-bottom:1px solid #eee
+    }
+    .cart-item img{
+      width:50px;
+      height:50px;
+      object-fit:cover;
+      border-radius:6px;
+      margin-right:8px
+    }
+    .error{
+      color:var(--danger);
+      display:block;
+      margin-top:6px;
+      font-size:13px
+    }
+    .ratingSmall{
+      color:#555;
+      font-size:14px;
+      margin:6px 0
+    }
+    .rating-item{
+      display:flex;
+      align-items:center;
+      margin:10px 0
+    }
+    .rating-item img{
+      width:50px;
+      height:50px;
+      object-fit:cover;
+      border-radius:6px;
+      margin-right:10px
+    }
+    @media(max-width:420px){
+      .box{width:92%}
+    }
+    button {
+      background-color: #b12c2c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    button:hover {
+      background-color: #d13a3a;
+    }
+    p{
+      color: black;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="menu" id="menuBtn"><span></span></div>
+    <h1 style="font-family: 'Agbalumo', sans-serif; font-size: 50px; letter-spacing: 5px;">EJ'S APPAREL</h1>
+    <div class="icons"><div class="cart" onclick="openPage('cart')">🛒<span class="cart-count" id="cartCount">0</span></div></div>
+    <div class="dropdown" id="dropdownMenu" aria-hidden="true"></div>
+  </header>
+
+  <div style="text-align:center;padding:10px;color:#666"> <i class="fas fa-map-marker-alt"></i> Cantilan, Surigao del Sur</div>
+
+  <div class="banner">
+    <div class="banner-content">
+      <div class="banner-text">
+        <h2 style="margin:0;color:var(--brand)">NEW ARRIVALS</h2>
+        <p style="color:#666;margin:6px 0 12px">Fresh styles just in — check them out!</p>
+        <button class="btnPrimary" onclick="openPage('home')">SHOP NOW</button>
+      </div>
+      <div class="banner-image">
+        <img src="image/arrival.png" alt="arrivals">
+      </div>
+    </div>
+  </div>
+
+  <!-- Pages -->
+  <div id="home" class="page active">
+    <div class="products">
+      <h3 style="text-align:center">Featured Products</h3>
+      <div class="product-list" id="productList">
+        <div class="product">
+          <img src="image/t-shirt.webp" alt="T-Shirt">
+          <p><b>T-Shirt</b></p>
+          <p>₱250</p>
+          <p class="ratingSmall">⭐⭐⭐⭐☆ (4.3 / 87 reviews)</p>
+          <button class="openVarBtn" data-name="T-Shirt" data-price="250" data-img="image/t-shirt.webp">Choose options</button>
+        </div>
+
+        <div class="product">
+          <img src="image/hoodie.webp" alt="Light Hoodie">
+          <p><b>Light Hoodie</b></p>
+          <p>₱450</p>
+          <p class="ratingSmall">⭐⭐⭐⭐⭐ (4.8 / 152 reviews)</p>
+          <button class="openVarBtn" data-name="Light Hoodie" data-price="450" data-img="image/hoodie.webp">Choose Options</button>
+        </div>
+
+        <div class="product">
+          <img src="image/jean.png" alt="Denim Jeans">
+          <p><b>Denim Jeans</b></p>
+          <p>₱650</p>
+          <p class="ratingSmall">⭐⭐⭐⭐☆ (4.5 / 98 reviews)</p>
+          <button class="openVarBtn" data-name="Denim Jeans" data-price="650" data-img="image/jean.png">Choose Options</button>
+        </div>
+
+        <div class="product">
+          <img src="image/sneakers.jpg" alt="Sneakers">
+          <p><b>Sneakers</b></p>
+          <p>₱1200</p>
+          <p class="ratingSmall">⭐⭐⭐⭐☆ (4.6 / 64 reviews)</p>
+          <button class="openVarBtn" data-name="Sneakers" data-price="1200" data-img="image/sneakers.jpg">Choose Options</button>
+        </div>
+
+        <div class="product">
+          <img src="image/cap.png" alt="Cap">
+          <p><b>Cap</b></p>
+          <p>₱180</p>
+          <p class="ratingSmall">⭐⭐⭐⭐☆ (4.2 / 43 reviews)</p>
+          <button class="openVarBtn" data-name="Cap" data-price="180" data-img="image/cap.png">Choose Options</button>
+        </div>
+
+        <div class="product">
+          <img src="image/dresses.png" alt="Summer Dress">
+          <p><b>Summer Dress</b></p>
+          <p>₱850</p>
+          <p class="ratingSmall">⭐⭐⭐⭐☆ (4.4 / 73 reviews)</p>
+          <button class="openVarBtn" data-name="Summer Dress" data-price="850" data-img="image/dresses.png">Choose Options</button>
+        </div>
+
+        <div class="product">
+          <img src="image/polo.webp" alt="Polo Shirt">
+          <p><b>Polo Shirt</b></p>
+          <p>₱350</p>
+          <p class="ratingSmall">⭐⭐⭐⭐☆ (4.1 / 59 reviews)</p>
+          <button class="openVarBtn" data-name="Polo Shirt" data-price="350" data-img="image/polo.webp">Choose Options</button>
+        </div>
+
+        <div class="product">
+          <img src="image/jacket.webp" alt="Jacket">
+          <p><b>Jacket</b></p>
+          <p>₱950</p>
+          <p class="ratingSmall">⭐⭐⭐⭐☆ (4.5 / 88 reviews)</p>
+          <button class="openVarBtn" data-name="Jacket" data-price="950" data-img="image/jacket.webp">Choose Options</button>
+        </div>
+
+        <div class="product">
+          <img src="image/socks.png" alt="Socks">
+          <p><b>Socks</b></p>
+          <p>₱80</p>
+          <p class="ratingSmall">⭐⭐⭐⭐⭐ (4.7 / 120 reviews)</p>
+          <button class="openVarBtn" data-name="Socks" data-price="80" data-img="image/socks.png">Choose Options</button>
+        </div>
+
+        <div class="product">
+          <img src="image/shorts.png" alt="Shorts">
+          <p><b>Shorts</b></p>
+          <p>₱300</p>
+          <p class="ratingSmall">⭐⭐⭐⭐☆ (4.3 / 67 reviews)</p>
+          <button class="openVarBtn" data-name="Shorts" data-price="300" data-img="image/shorts.png">Choose Options</button>
+        </div>
+
+        <div class="product">
+          <img src="image/blouse.webp" alt="Blouse">
+          <p><b>Blouse</b></p>
+          <p>₱420</p>
+          <p class="ratingSmall">⭐⭐⭐⭐☆ (4.4 / 58 reviews)</p>
+          <button class="openVarBtn" data-name="Blouse" data-price="420" data-img="image/blouse.webp">Choose Options</button>
+        </div>
+
+        <div class="product">
+          <img src="image/belt.webp" alt="Leather Belt">
+          <p><b>Leather Belt</b></p>
+          <p>₱260</p>
+          <p class="ratingSmall">⭐⭐⭐⭐☆ (4.5 / 39 reviews)</p>
+          <button class="openVarBtn" data-name="Leather Belt" data-price="260" data-img="image/belt.webp">Choose Options</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="cart" class="page">
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+    <p id="cartTotal" style="font-weight:bold"></p>
+    <div style="display:flex;gap:8px"><button class="btnPrimary" onclick="checkout()">Checkout</button><button onclick="clearCart()">Clear Cart</button></div>
+  </div>
+
+  <div id="orders" class="page"><h3>Your Orders:</h3><ul id="orderList"></ul></div>
+  <div id="ratings" class="page" >
+    <h3>Ratings</h3>
+    <p style="color:#666">Overall customer favorites — real reviews with sample ratings.</p>
+
+    <div class="rating-item">
+      <img src="image/t-shirt.webp" alt="T-Shirt">
+      <span>⭐⭐⭐⭐☆ (4.3 / 87 reviews) - "Great quality and fast delivery!" - Maria</span>
+    </div>
+
+    <div class="rating-item">
+      <img src="image/hoodie.webp" alt="Light Hoodie">
+      <span>⭐⭐⭐⭐⭐ (4.8 / 152 reviews) - "Nice fabric, will order again." - John</span>
+    </div>
+
+    <div class="rating-item">
+      <img src="image/jean.png" alt="Denim Jeans">
+      <span>⭐⭐⭐⭐☆ (4.5 / 98 reviews) - "Perfect fit and stylish." - Anne</span>
+    </div>
+
+    <div class="rating-item">
+      <img src="image/sneakers.jpg" alt="Sneakers">
+      <span>⭐⭐⭐⭐☆ (4.6 / 64 reviews) - "Comfortable and looks great!" - Leo</span>
+    </div>
+
+    <div class="rating-item">
+      <img src="image/cap.png" alt="Cap">
+      <span>⭐⭐⭐⭐☆ (4.2 / 43 reviews) - "Nice fit, good quality." - Kim</span>
+    </div>
+
+    <div class="rating-item">
+      <img src="image/dresses.png" alt="Summer Dress">
+      <span>⭐⭐⭐⭐☆ (4.4 / 73 reviews) - "Lightweight and cute!" - Aya</span>
+    </div>
+
+    <div class="rating-item">
+      <img src="image/polo.webp" alt="Polo Shirt">
+      <span>⭐⭐⭐⭐☆ (4.1 / 59 reviews) - "Crisp and comfy for work." - Dale</span>
+    </div>
+
+    <div class="rating-item">
+      <img src="image/jacket.webp" alt="Jacket">
+      <span>⭐⭐⭐⭐☆ (4.5 / 88 reviews) - "Warm and stylish." - Bea</span>
+    </div>
+
+    <div class="rating-item">
+      <img src="image/socks.png" alt="Socks">
+      <span>⭐⭐⭐⭐⭐ (4.7 / 120 reviews) - "Soft and durable." - Ken</span>
+    </div>
+
+    <div class="rating-item">
+      <img src="image/shorts.png" alt="Shorts">
+      <span>⭐⭐⭐⭐☆ (4.3 / 67 reviews) - "Great for daily wear." - Vince</span>
+    </div>
+
+    <div class="rating-item">
+      <img src="image/blouse.webp" alt="Blouse">
+      <span>⭐⭐⭐⭐☆ (4.4 / 58 reviews) - "Elegant and comfy." - Rina</span>
+    </div>
+
+    <div class="rating-item">
+      <img src="image/belt.webp" alt="Leather Belt">
+      <span>⭐⭐⭐⭐☆ (4.5 / 39 reviews) - "Solid buckle, good leather." - Omar</span>
+    </div>
+  </div>
+
+  <!-- About Page -->
+<div id="about" class="page">
+  <div style="max-width: 1000px; margin: 0 auto; padding: 10px;">
+    <h2 style="text-align: center; color: var(--brand); margin-bottom: 30px;">About EJ'S APPAREL</h2>
+    
+    <!-- Company Story -->
+    <div style="background: #f9f9f9; padding: 25px; border-radius: 10px; margin-bottom: 25px; border-left: 4px solid var(--brand);">
+      <h3 style="color: var(--brand); margin-top: 0;">Our Story</h3>
+      <p style="line-height: 1.6; color: #333;">
+        EJ'S APPAREL was born in the heart of Cantilan, Surigao del Sur with a simple mission: 
+        to provide high-quality, affordable fashion that celebrates individuality and style. 
+        What started as a small local boutique has grown into a trusted online destination 
+        for fashion-forward individuals who value quality, comfort, and great prices.
+      </p>
+    </div>
+
+    <!-- Mission & Vision -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+      <div style="background: #fff3f3; padding: 20px; border-radius: 8px; text-align: center;">
+        <div style="font-size: 2em; color: var(--brand); margin-bottom: 10px;">🎯</div>
+        <h4 style="color: var(--brand); margin: 10px 0;">Our Mission</h4>
+        <p style="font-size: 14px; line-height: 1.5;">
+          To make quality fashion accessible to everyone while maintaining the highest standards 
+          of customer service and product excellence.
+        </p>
+      </div>
+      
+      <div style="background: #f0f8ff; padding: 20px; border-radius: 8px; text-align: center;">
+        <div style="font-size: 2em; color: var(--brand); margin-bottom: 10px;">🌟</div>
+        <h4 style="color: var(--brand); margin: 10px 0;">Our Vision</h4>
+        <p style="font-size: 14px; line-height: 1.5;">
+          To become the most trusted online apparel brand in the region, known for our 
+          commitment to quality, style, and customer satisfaction.
+        </p>
+      </div>
+    </div>
+
+    <!-- Why Choose Us -->
+    <div style="background: #fff; border: 2px solid var(--brand); padding: 25px; border-radius: 10px; margin-bottom: 25px;">
+      <h3 style="color: var(--brand); text-align: center; margin-top: 0;">Why Choose EJ'S APPAREL?</h3>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+        <div style="text-align: center; padding: 15px;">
+          <div style="font-size: 1.5em; color: var(--brand); margin-bottom: 8px;">🏷️</div>
+          <h5 style="margin: 8px 0; color: #333;">Affordable Prices</h5>
+          <p style="font-size: 13px; color: #666;">Quality fashion that won't break the bank</p>
+        </div>
+        
+        <div style="text-align: center; padding: 15px;">
+          <div style="font-size: 1.5em; color: var(--brand); margin-bottom: 8px;">⚡</div>
+          <h5 style="margin: 8px 0; color: #333;">Fast Delivery</h5>
+          <p style="font-size: 13px; color: #666;">Quick shipping across Cantilan and beyond</p>
+        </div>
+        
+        <div style="text-align: center; padding: 15px;">
+          <div style="font-size: 1.5em; color: var(--brand); margin-bottom: 8px;">✅</div>
+          <h5 style="margin: 8px 0; color: #333;">Quality Guarantee</h5>
+          <p style="font-size: 13px; color: #666;">Premium materials and craftsmanship</p>
+        </div>
+        
+        <div style="text-align: center; padding: 15px;">
+          <div style="font-size: 1.5em; color: var(--brand); margin-bottom: 8px;">💝</div>
+          <h5 style="margin: 8px 0; color: #333;">Customer First</h5>
+          <p style="font-size: 13px; color: #666;">Your satisfaction is our priority</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Store Information -->
+    <div style="background: linear-gradient(135deg, var(--brand), #d13a3a); color: white; padding: 25px; border-radius: 10px; text-align: center;">
+      <h3 style="margin-top: 0; color: white;">Visit Us:</h3>
+      <div style="display: inline-block; text-align: left; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px;">
+        <p style="margin: 8px 0;"><strong>📍 Location:</strong> Cantilan, Surigao del Sur</p>
+        <p style="margin: 8px 0;"><strong>🕒 Store Hours:</strong> 8:00 AM - 7:00 PM (Mon-Sat)</p>
+        <p style="margin: 8px 0;"><strong>📞 Contact:</strong> 09307737388</p>
+        <p style="margin: 8px 0;"><strong>🚚 Delivery:</strong> Free local delivery in Cantilan</p>
+      </div>
+    </div>
+
+    <!-- Team Section -->
+    <div style="margin-top: 30px; text-align: center;">
+      <h3 style="color: var(--brand);">Our Commitment</h3>
+      <p style="line-height: 1.6; color: #666; max-width: 600px; margin: 0 auto;">
+        At EJ'S APPAREL, we believe that everyone deserves to look and feel their best. 
+        Our carefully curated collection combines style, comfort, and affordability, 
+        bringing you the latest trends while staying true to our roots in Cantilan.
+      </p>
+      <p style="line-height: 1.6; color: #666; max-width: 600px; margin: 15px auto; font-style: italic;">
+        "Fashion for everyone, quality for everyone."
+      </p>
+    </div>
+  </div>
+</div>
+
+  <div class="bottom-menu">
+    <button onclick="openPage('home')">🏠 Home</button>
+    <button onclick="openPage('orders')">📋 Orders</button>
+    <button onclick="openPage('ratings')">⭐ Ratings</button>
+    <button onclick="openPage('about')">ℹ️ About</button>
+  </div>
+
+  <!-- LOGIN modal -->
+  <div class="overlay" id="loginModal" aria-hidden="true">
+    <div class="box">
+      <button class="closeBtn" onclick="closeLogin()">✖</button>
+      <h3>Login</h3>
+      <label style="display:block;text-align:left;font-size:13px">Username:</label>
+      <input id="login_username" type="text" autocomplete="username">
+      <label style="display:block;text-align:left;font-size:13px">Password:</label>
+      <div class="pwWrap">
+        <input id="login_password" type="password" autocomplete="current-password">
+        <button class="pwToggle" id="login_pw_toggle" onclick="togglePw('login_password','login_pw_toggle')">👁️</button>
+      </div>
+      <div style="margin-top:12px"><button class="btnPrimary" onclick="login()">Login</button></div>
+      <div style="margin-top:12px;text-align:center">
+        <small style="color:#666">Don't have an account?</small><br>
+        <button style="background:none;border:0;color:var(--brand);cursor:pointer;font-size:14px;font-weight:bold;text-decoration:underline;margin-top:4px;" onclick="openSignup()">Create An Account</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIGNUP modal -->
+  <div class="overlay" id="signupModal" aria-hidden="true">
+    <div class="box">
+      <button class="closeBtn" onclick="closeSignup()">✖</button>
+      <h3>Create Account</h3>
+      <label style="display:block;text-align:left;font-size:13px">Full Name:</label>
+      <input id="su_fullname" type="text" autocomplete="name">
+      <label style="display:block;text-align:left;font-size:13px">Email:</label>
+      <input id="su_email" type="email" autocomplete="email">
+      <label style="display:block;text-align:left;font-size:13px">Username:</label>
+      <input id="su_username" type="text" autocomplete="username">
+      <label style="display:block;text-align:left;font-size:13px">Address:</label>
+      <input id="su_address" type="text" autocomplete="address">
+      <div class="strengthBar"><div id="strengthFill" class="strengthFill"></div></div>
+      <div id="strengthText" class="strengthText">Enter Password:</div>
+      <label style="display:block;text-align:left;font-size:13px">Password:</label>
+      <div class="pwWrap">
+        <input id="su_password" type="password" autocomplete="new-password" placeholder="Create Password">
+        <button class="pwToggle" id="su_pw_toggle" onclick="togglePw('su_password','su_pw_toggle')">👁️</button>
+      </div>
+      <label style="display:block;text-align:left;font-size:13px;margin-top:8px">Confirm Password:</label>
+      <div class="pwWrap">
+        <input id="su_confirm" type="password" autocomplete="new-password" placeholder="Confirm Password">
+        <button class="pwToggle" id="su_confirm_toggle" onclick="togglePw('su_confirm','su_confirm_toggle')">👁️</button>
+      </div>
+
+      <small id="su_error" class="error" style="display:none"></small>
+      <div style="margin-top:12px"><button id="createAccBtn" class="btnPrimary" onclick="createAccount()" disabled>Create Account</button></div>
+      <div style="margin-top:12px;text-align:center">
+        <small style="color:#666">Already have an account?</small><br>
+        <button class="signup-btn" onclick="openLoginFromSignup()">Sign in</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIETY modal -->
+  <div class="overlay" id="varietyModal" aria-hidden="true">
+    <div class="box">
+      <button class="closeBtn" onclick="closeVariety()">✖</button>
+      <h3 id="varietyProductName">Product</h3>
+      <img id="varietyProductImg" src="" alt="product" style="width:160px;border-radius:8px;margin:10px 0">
+      <p id="varietyProductPrice" style="color:#666;margin:6px 0"></p>
+      <label style="display:block;text-align:left;font-size:13px">Size:</label>
+      <select id="varietySize"></select>
+      <label style="display:block;text-align:left;font-size:13px">Color:</label>
+      <select id="varietyColor"></select>
+      <label style="display:block;text-align:left;font-size:13px">Quantity:</label>
+      <input id="varietyQty" type="number" value="1" min="1">
+      <div style="margin-top:12px;display:flex;gap:8px;justify-content:center">
+        <button class="btnPrimary" id="varAddBtn">Add to Cart</button>
+        <button onclick="closeVariety()" style="padding:9px 14px;border-radius:6px;border:1px solid #ccc;background:#b12c2c;cursor:pointer">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ---------- Simple state and storage keys ---------- */
+const STORAGE = { ACC: 'ej_accounts', USER: 'ej_currentUser', CART: 'ej_cart', ORDERS: 'ej_orders' };
+let accounts = JSON.parse(localStorage.getItem(STORAGE.ACC)) || [];
+let currentUser = JSON.parse(localStorage.getItem(STORAGE.USER)) || null;
+let cart = JSON.parse(localStorage.getItem(STORAGE.CART)) || [];
+let orders = JSON.parse(localStorage.getItem(STORAGE.ORDERS)) || [];
+
+const productVarieties = {
+  "T-Shirt": { sizes:["Small","Medium","Large","XL"], colors:["Black","White","Red","Blue"] },
+  "Light Hoodie": { sizes:["Small","Medium","Large"], colors:["Gray","Black","White"] },
+  "Denim Jeans": { sizes:["28","30","32","34","36"], colors:["Blue","Dark Blue","Black"] },
+  "Sneakers": { sizes:["38","39","40","41","42","43","44"], colors:["White","Black","Navy"] },
+  "Cap": { sizes:["One size"], colors:["Black","Navy","Beige","Red"] },
+  "Summer Dress": { sizes:["XS","Small","Medium","Large","XL"], colors:["Floral","Yellow","Blue","Black"] },
+  "Polo Shirt": { sizes:["Small","Medium","Large","XL"], colors:["White","Navy","Maroon","Black"] },
+  "Jacket": { sizes:["Small","Medium","Large","XL"], colors:["Black","Olive","Navy"] },
+  "Socks": { sizes:["Free size"], colors:["Black","White","Gray"] },
+  "Shorts": { sizes:["Small","Medium","Large","XL"], colors:["Black","Gray","Navy"] },
+  "Blouse": { sizes:["XS","Small","Medium","Large","XL"], colors:["White","Pink","Blue","Black"] },
+  "Leather Belt": { sizes:["S","M","L","XL"], colors:["Brown","Black"] }
+};
+
+/* ---------- Initialization ---------- */
+function init(){
+  attachProductButtons();
+  attachVarietyAdd();
+  buildDropdown();
+  renderCart();
+  renderOrders();
+  // NOTE: no modal auto-open on load (user requested no auto add/popups)
+}
+window.addEventListener('load', init);
+
+/* ---------- Dropdown ---------- */
+document.getElementById('menuBtn').addEventListener('click', toggleDropdown);
+function toggleDropdown(){
+  const db = document.getElementById('dropdownMenu');
+  if(db.style.display==='block'){ db.style.display='none'; db.setAttribute('aria-hidden','true'); }
+  else { buildDropdown(); db.style.display='block'; db.setAttribute('aria-hidden','false'); }
+}
+function buildDropdown(){
+  const db = document.getElementById('dropdownMenu');
+  db.innerHTML = '';
+  if(currentUser){
+    const info = document.createElement('div'); info.style.padding='10px'; info.style.borderBottom='1px solid #f0f0f0';
+    info.innerHTML = `<strong>${escapeHtml(currentUser.fullname||currentUser.username)}</strong><br><small style="color:#666">${escapeHtml(currentUser.email||'')}</small>`;
+    db.appendChild(info);
+    const btnLogout = document.createElement('button'); btnLogout.textContent='Logout'; btnLogout.onclick = ()=>{ logout(); db.style.display='none'; }; db.appendChild(btnLogout);
+    const btnSettings = document.createElement('button'); btnSettings.textContent='Settings'; btnSettings.onclick = ()=>{ alert('Settings placeholder'); db.style.display='none'; }; db.appendChild(btnSettings);
+  } else {
+    const btnLogin = document.createElement('button'); btnLogin.textContent='Login'; btnLogin.onclick = ()=>{ openLogin(); db.style.display='none'; }; db.appendChild(btnLogin);
+    const btnSignup = document.createElement('button'); btnSignup.textContent='Create Account'; btnSignup.onclick = ()=>{ openSignup(); db.style.display='none'; }; db.appendChild(btnSignup);
+  }
+}
+/* ---------- Pages ---------- */
+function openPage(id){ 
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el = document.getElementById(id);
+  if(el) el.classList.add('active');
+  if(id === 'cart') renderCart();
+  if(id === 'orders') renderOrders();
+  if(id === 'ratings') renderRatings();
+}
+/* ---------- Auth (localStorage) ---------- */
+function openLogin(){ document.getElementById('loginModal').style.display='flex'; document.getElementById('loginModal').setAttribute('aria-hidden','false'); }
+function closeLogin(){ document.getElementById('loginModal').style.display='none'; document.getElementById('loginModal').setAttribute('aria-hidden','true'); }
+function openSignup(){ 
+  closeLogin(); // Close login modal first
+  resetSignupForm(); 
+  document.getElementById('signupModal').style.display='flex'; 
+  document.getElementById('signupModal').setAttribute('aria-hidden','false'); 
+}
+function openLoginFromSignup(){
+  closeSignup(); // Close signup modal first
+  document.getElementById('loginModal').style.display='flex'; 
+  document.getElementById('loginModal').setAttribute('aria-hidden','false'); 
+}
+function closeSignup(){ document.getElementById('signupModal').style.display='none'; document.getElementById('signupModal').setAttribute('aria-hidden','true'); }
+
+async function createAccount() {
+    const fullname = document.getElementById('su_fullname').value.trim();
+    const email = document.getElementById('su_email').value.trim();
+    const username = document.getElementById('su_username').value.trim();
+    const address = document.getElementById('su_address').value.trim();
+    const password = document.getElementById('su_password').value;
+    const confirm = document.getElementById('su_confirm').value;
+    const errEl = document.getElementById('su_error');
+    errEl.style.display = 'none'; 
+    errEl.innerText = '';
+
+    // Validation
+    if (!fullname || !email || !username || !address || !password || !confirm) { 
+        errEl.innerText = 'Please Fill All Fields.'; 
+        errEl.style.display = 'block'; 
+        return; 
+    }
+    if (!validateEmail(email)) { 
+        errEl.innerText = 'Enter A Valid Email.'; 
+        errEl.style.display = 'block'; 
+        return; 
+    }
+    if (password !== confirm) { 
+        errEl.innerText = 'Passwords Do Not Match.'; 
+        errEl.style.display = 'block'; 
+        return; 
+    }
+    const strength = evaluatePassword(password);
+    if (strength.score < 2) { 
+        errEl.innerText = 'Password Is Too Weak.'; 
+        errEl.style.display = 'block'; 
+        return; 
+    }
+
+    try {
+        const response = await fetch("register.php", {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                fullname: fullname,
+                email: email,
+                username: username,
+                address: address,
+                password: password
+            })
+        });
+
+        // Check if response is OK before parsing JSON
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            // Store user data in localStorage
+            currentUser = { 
+                username: data.username,
+                fullname: fullname,
+                email: email,
+                address: address
+            };
+            localStorage.setItem(STORAGE.USER, JSON.stringify(currentUser));
+            
+            // Update global accounts array for consistency
+            if (typeof accounts !== 'undefined') {
+                accounts.push({ username: username, fullname: fullname, email: email, address: address });
+                localStorage.setItem(STORAGE.ACC, JSON.stringify(accounts));
+            }
+            
+            closeSignup(); 
+            closeLogin(); 
+            buildDropdown(); 
+            alert('Account Created and Logged In. Welcome!');
+        } else {
+            errEl.innerText = data.message || 'Registration failed';
+            errEl.style.display = 'block';
+        }
+    } catch (err) {
+        console.error('Registration error:', err);
+        errEl.innerText = 'Registration failed. Please check your connection and try again.';
+        errEl.style.display = 'block';
+    }
+}
+async function login() {
+  const username = document.getElementById('login_username').value.trim();
+  const password = document.getElementById('login_password').value;
+
+  if (!username || !password) {
+    alert('Enter Username and Password.');
+    return;
+  }
+
+  try {
+    const response = await fetch("login.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+
+    // Handle non-OK responses (like 404 or 500)
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.status === 'success') {
+      // Store user data in localStorage
+      localStorage.setItem('ej_currentUser', JSON.stringify({ 
+        username: data.username 
+      }));
+      
+      closeLogin();
+      buildDropdown();
+      alert(`Welcome back, ${data.username}!`);
+      
+      // Optional: Redirect or refresh page
+      // window.location.reload();
+    } else {
+      alert(data.message || 'Login failed');
+    }
+  } catch (err) {
+    console.error('Login error:', err);
+    alert('Login failed. Please check your connection and try again.');
+  }
+}
+function logout(){
+  currentUser = null; localStorage.removeItem(STORAGE.USER); buildDropdown(); alert('Logged Out'); }
+
+/* ---------- PW show/hide & strength ---------- */
+function togglePw(inputId, btnId){
+  const inp = document.getElementById(inputId), btn = document.getElementById(btnId);
+  if(!inp) return;
+  if(inp.type === 'password'){ inp.type='text'; btn.innerText='🙈'; btn.title='Hide password'; }
+  else { inp.type='password'; btn.innerText='👁️'; btn.title='Show password'; }
+}
+function evaluatePassword(pw){
+  let score=0; if(!pw) return {score:0,label:'Enter Password'};
+  if(pw.length>=8) score++; if(/[0-9]/.test(pw)) score++; if(/[!@#$%^&*(),.?":{}|<>]/.test(pw)) score++; if(/[a-z]/.test(pw)&&/[A-Z]/.test(pw)) score++;
+  score = Math.min(3, score); const label = score<=1?'Weak':score===2?'Medium':'Strong'; return {score,label};
+}
+function updateStrengthUI(score, text){
+  const fill = document.getElementById('strengthFill'), txt = document.getElementById('strengthText');
+  const pct = (score/3)*100; let color = 'var(--danger)'; if(score<=1) color='var(--danger)'; else if(score===2) color='var(--warning)'; else color='var(--ok)';
+  fill.style.width = pct+'%'; fill.style.background = color; txt.innerText = text || (score<=1?'Weak':score===2?'Medium':'Strong');
+}
+document.getElementById('su_password').addEventListener('input', e=>{ const r = evaluatePassword(e.target.value); updateStrengthUI(r.score,r.label); validateSignupButtons(); });
+document.getElementById('su_confirm').addEventListener('input', validateSignupButtons);
+
+function validateSignupButtons(){
+  const pw = document.getElementById('su_password').value, cf = document.getElementById('su_confirm').value, btn = document.getElementById('createAccBtn'), err = document.getElementById('su_error');
+  err.style.display='none'; err.innerText=''; const r = evaluatePassword(pw);
+  if(!pw||!cf){ btn.disabled=true; return; } if(pw !== cf){ btn.disabled=true; err.innerText='Passwords do not match.'; err.style.display='block'; return; } if(r.score < 2){ btn.disabled=true; err.innerText='Password strength must be at least Medium.'; err.style.display='block'; return; } btn.disabled=false;
+}
+function resetSignupForm(){ document.getElementById('su_fullname').value=''; document.getElementById('su_email').value=''; document.getElementById('su_username').value=''; document.getElementById('su_password').value=''; document.getElementById('su_confirm').value=''; document.getElementById('su_error').style.display='none'; updateStrengthUI(0,'Enter Password'); document.getElementById('createAccBtn').disabled=true; }
+
+/* ---------- Product button wiring ---------- */
+function attachProductButtons(){
+  document.querySelectorAll('.openVarBtn').forEach(b=>{
+    b.addEventListener('click', ()=> {
+      const name = b.dataset.name, price = b.dataset.price, img = b.dataset.img;
+      const sizes = productVarieties[name]?.sizes || ['One size'];
+      const colors = productVarieties[name]?.colors || ['Default'];
+      const sizeSel = document.getElementById('varietySize'); sizeSel.innerHTML=''; sizes.forEach(s=>{const o=document.createElement('option');o.value=s;o.text=s;sizeSel.appendChild(o);});
+      const colorSel = document.getElementById('varietyColor'); colorSel.innerHTML=''; colors.forEach(c=>{const o=document.createElement('option');o.value=c;o.text=c;colorSel.appendChild(o);});
+      document.getElementById('varietyProductName').innerText = name;
+      document.getElementById('varietyProductImg').src = img;
+      document.getElementById('varietyProductPrice').innerText = '₱' + price;
+      document.getElementById('varietyQty').value = 1;
+      const modal = document.getElementById('varietyModal'); modal.dataset.name = name; modal.dataset.price = price; modal.dataset.img = img;
+      modal.style.display = 'flex'; modal.setAttribute('aria-hidden','false');
+    });
+  });
+}
+
+/* ---------- Variety add wiring ---------- */
+document.getElementById('varAddBtn').addEventListener('click', addVarietyToCart);
+function closeVariety(){ const modal = document.getElementById('varietyModal'); modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
+
+function addVarietyToCart(){
+  if(!currentUser){ alert('Please login first'); closeVariety(); openLogin(); return; }
+  const modal = document.getElementById('varietyModal');
+  const name = modal.dataset.name || document.getElementById('varietyProductName').innerText;
+  const price = parseFloat(modal.dataset.price || '0') || 0;
+  const img = modal.dataset.img || document.getElementById('varietyProductImg').src;
+  const size = document.getElementById('varietySize').value;
+  const color = document.getElementById('varietyColor').value;
+  const qty = Math.max(1, parseInt(document.getElementById('varietyQty').value,10) || 1);
+  cart.push({ name, price, img, size, color, qty });
+  saveAll(); renderCart();
+  alert(`${name} x${qty} added to cart`);
+  closeVariety();
+}
+
+/* ---------- Cart functions ---------- */
+function renderCart(){
+  const el = document.getElementById('cartItems'); el.innerHTML=''; let total=0;
+  cart.forEach((it, idx)=>{
+    const row = document.createElement('div'); row.className='cart-item';
+    row.innerHTML = `<div style="display:flex;align-items:center"><img src="${it.img}" alt=""><div style="margin-left:8px"><strong>${escapeHtml(it.name)}</strong><br><small>₱${it.price} · ${escapeHtml(it.size)} · ${escapeHtml(it.color)}</small></div></div>
+      <div style="text-align:right"><div><button onclick="changeQty(${idx},1)">+</button> <button onclick="changeQty(${idx},-1)">-</button></div><div style="margin-top:6px"><button onclick="removeItem(${idx})">Remove</button></div></div>`;
+    el.appendChild(row); total += (it.price||0)*(it.qty||1);
+  });
+  document.getElementById('cartTotal').innerText = 'Total: ₱' + total;
+  document.getElementById('cartCount').innerText = cart.reduce((a,b)=>a+(b.qty||0),0);
+}
+function changeQty(i,delta){ if(!cart[i]) return; cart[i].qty += delta; if(cart[i].qty<=0) cart.splice(i,1); saveAll(); renderCart(); }
+function removeItem(i){ cart.splice(i,1); saveAll(); renderCart(); }
+function clearCart(){ cart=[]; saveAll(); renderCart(); }
+async function checkout() { 
+    if (cart.length === 0) { 
+        alert('Cart empty'); 
+        return; 
+    }
+    
+    if (!currentUser) {
+        alert('Please login first to checkout');
+        openLogin();
+        return;
+    }
+
+    try {
+        // Calculate total
+        const total = cart.reduce((sum, item) => sum + (item.price * (item.qty || 1)), 0);
+        
+        // Prepare order data for database
+        const orderData = {
+            username: currentUser.username,
+            fullname: currentUser.fullname || currentUser.username,
+            email: currentUser.email || '',
+            address: currentUser.address || 'Cantilan, Surigao del Sur',
+            items: cart,
+            total_amount: total
+        };
+
+        // Send to database
+        const response = await fetch("save_order.php", {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(orderData)
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            // Also save to localStorage
+            orders.push({
+                id: data.order_id,
+                items: cart.slice(), 
+                user: currentUser.username,
+                order_date: new Date().toISOString(),
+                total: total
+            });
+            
+            cart = []; 
+            saveAll(); 
+            renderCart(); 
+            renderOrders(); 
+            alert('Order placed! Order ID: ' + data.order_id);
+        } else {
+            throw new Error(data.message);
+        }
+    } catch (err) {
+        console.error('Checkout error:', err);
+        // Fallback to original method
+        orders.push({
+            id: Date.now(), 
+            items: cart.slice(), 
+            user: currentUser.username
+        });
+        cart = []; 
+        saveAll(); 
+        renderCart(); 
+        renderOrders(); 
+        alert('Order placed (offline mode)');
+    }
+}
+async function renderOrders() { 
+    const ol = document.getElementById('orderList'); 
+
+    if (!ol) {
+        console.warn('Element with id="orderList" not found.');
+        return;
+    }
+
+    ol.innerHTML = '';
+
+    if (!currentUser) {
+        ol.innerHTML = '<li>Please login to view orders</li>';
+        return;
+    }
+
+    try {
+        // Try to get orders from database
+        const response = await fetch(`get_orders.php?username=${encodeURIComponent(currentUser.username)}`);
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            if (data.orders.length > 0) {
+                // Display database orders
+                data.orders.forEach(order => {
+                    const li = document.createElement('li');
+                    li.style.cssText = 'margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9;';
+                    
+                    const itemsText = order.items
+                        .map(item => `${item.name} - ${item.color} - ${item.size} - Qty: ${item.qty || 1}`)
+                        .join(', ');
+                    
+                    li.innerHTML = `
+                        <strong>Order #${order.order_id}</strong><br>
+                        <small>Date: ${new Date(order.order_date).toLocaleDateString()}</small><br>
+                        <small>Status: ${order.status}</small><br>
+                        ${itemsText}<br>
+                        <strong>Total: ₱${order.total_amount}</strong>
+                    `;
+                    ol.appendChild(li);
+                });
+            } else {
+                ol.innerHTML = '<li>No orders yet.</li>';
+            }
+        } else {
+            throw new Error(data.message);
+        }
+
+    } catch (err) {
+        console.error('Database error:', err);
+
+        // Fallback to localStorage
+        if (!Array.isArray(orders) || orders.length === 0) {
+            ol.innerHTML = '<li>No orders yet.</li>';
+            return;
+        }
+
+        const userOrders = orders.filter(order => order.user === currentUser.username);
+        if (userOrders.length === 0) {
+            ol.innerHTML = '<li>No orders yet.</li>';
+            return;
+        }
+
+        userOrders.forEach(order => {
+            const li = document.createElement('li');
+            li.style.cssText = 'margin-bottom: 10px; padding: 8px; border: 1px solid #eee; border-radius: 5px;';
+            
+            const itemsText = order.items
+                .map(i => `Product: ${i.name} - Color: ${i.color} - Size: ${i.size} - Quantity: ${i.qty || 1}`)
+                .join(', ');
+                
+            li.innerHTML = `
+                <strong>Order #${order.id}</strong><br>
+                ${itemsText}
+            `;
+            ol.appendChild(li);
+        });
+    }
+}
+/* ---------- Save / Helpers ---------- */
+function saveAll(){ localStorage.setItem(STORAGE.ACC, JSON.stringify(accounts)); localStorage.setItem(STORAGE.USER, JSON.stringify(currentUser)); localStorage.setItem(STORAGE.CART, JSON.stringify(cart)); localStorage.setItem(STORAGE.ORDERS, JSON.stringify(orders)); }
+function validateEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+function escapeHtml(str){ return String(str||'').replace(/[&<>"']/g, s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[s]); }
+
+/* ---------- Initialize storage state (if present) ---------- */
+accounts = JSON.parse(localStorage.getItem(STORAGE.ACC)) || accounts;
+currentUser = JSON.parse(localStorage.getItem(STORAGE.USER)) || currentUser;
+cart = JSON.parse(localStorage.getItem(STORAGE.CART)) || cart;
+orders = JSON.parse(localStorage.getItem(STORAGE.ORDERS)) || orders;
+
+/* Prevent dropdown auto-close issues: hide on outside click */
+document.addEventListener('click', function(e){
+  const db = document.getElementById('dropdownMenu');
+  if(!e.target.closest('#menuBtn') && !e.target.closest('#dropdownMenu')) db.style.display = 'none';
+});
+/* clicking outside overlays closes them */
+document.addEventListener('click', function(e){
+  ['loginModal','signupModal','varietyModal'].forEach(id=>{
+    const overlay = document.getElementById(id);
+    if(!overlay) return;
+    if(overlay.style.display==='flex'){
+      const box = overlay.querySelector('.box');
+      if(box && !box.contains(e.target) && !e.target.closest('.openVarBtn') && !e.target.closest('.dropdown') && !e.target.closest('#menuBtn')){
+        overlay.style.display='none';
+        overlay.setAttribute('aria-hidden','true');
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>
